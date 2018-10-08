@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<body>
+<canvas id="p2 canvas" width="500" height="500" style="border:3px solid orange;">
+
+<script>
+
+	var canvas = document.getElementById('p2 canvas');
+	var context = canvas.getContext('2d');
+
+	var rad = 0;
+	var inner = 100;
+	var points = 5;
+	var angle = 0.005;	
+	
+	context.translate(250, 250);
+	
+	function drawStar(){
+		
+		context.fillStyle = "#b3ffff";
+		context.fillRect(-500, -500, canvas.width*2, canvas.height*2);
+		
+		context.beginPath();
+		context.moveTo(0, rad);
+		
+		for(var i = 0; i < points; i++){
+		
+			context.rotate(Math.PI/points);
+			context.lineTo(0, (inner));
+			context.rotate(Math.PI/points);
+			context.lineTo(0, rad);	
+		}
+		
+		context.stroke();
+		context.fillStyle = "cyan";
+		context.fill();
+		context.rotate(angle);
+		
+		if(rad <= 300){
+			rad+=1;
+		}
+		if(rad == 301){
+			decrease = 1;
+		}
+		
+		drawOther();
+		drawTriangle();
+		
+		requestAnimationFrame(drawStar);
+	}
+	
+	requestAnimationFrame(drawStar);
+	
+	function drawOther(){
+		
+		context.beginPath();
+		//context.moveTo(250, 250);
+		
+		context.arc(0, 0, rad/4, 0, 2*Math.PI);
+		context.strokeStyle = "orange";
+		context.stroke();
+		context.fillStyle = "orange";
+		context.fill();
+		
+	}
+	
+	function drawTriangle(){
+		
+		context.beginPath();
+		
+		for(var j = 0; j < points; j++){
+			context.moveTo(0, rad/4);
+			
+			context.lineTo(10, rad/4);
+			context.lineTo(0, rad);
+			context.lineTo(-10, rad/4);
+			context.lineTo(0, rad/4);
+			
+			context.moveTo(Math.PI/points, rad/4);
+
+			context.fillStyle = "orange";
+			context.fill();
+			
+			context.rotate(2*Math.PI/points);
+		}
+	}
+	
+	function drawMore(){
+		
+		context.beginPath();
+		context.moveTo(0, rad/4);
+		
+		for(var i = 0; i < points; i++){
+		
+			context.rotate(Math.PI/points);
+			context.lineTo(0, (inner/4));
+			context.rotate(Math.PI/points);
+			context.lineTo(0, rad/4);	
+		}
+		
+		context.stroke();
+		context.fillStyle = "cyan";
+		context.fill();
+		context.rotate(angle);
+		
+		if(rad <= 300){
+			rad+=1;
+		}
+		if(rad == 301){
+			rad = 0;
+		}
+		
+		requestAnimationFrame(drawMore);
+	}
+	
+	requestAnimationFrame(drawMore);
+	
+</script>
+
+</body>
+</html>

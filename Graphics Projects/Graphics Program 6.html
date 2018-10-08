@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<body onload="moveForMe()">
+<canvas id="p6 canvas" width="500" height="500" style="border:1px solid #000;"></canvas>
+
+<script src="http://graphics.cs.wisc.edu/JS/twgl-full.min.js"></script>
+
+<script>
+
+function moveForMe() {
+
+  var canvas = document.getElementById("p6 canvas");
+  var gl = canvas.getContext("webgl");
+  var m4 = twgl.m4;
+
+  var vertexSource = "" + 
+	"attribute vec3 pos;" + 
+	"attribute vec3 inColor;" + 
+	"varying vec3 outColor;" + 
+	"uniform mat4 transf;" +
+	"void main(void) {" + 
+	"  gl_Position = transf * vec4(pos, 1.0);" + 
+	"  outColor = inColor;" +
+	"}";
+	
+  var fragmentSource = "" + 
+    "precision highp float;" +
+    "varying vec3 outColor;" +
+	"void main(void) {" + 
+	"  gl_FragColor = vec4(outColor, 1.0);" + 
+	"}";
+  
+  //VERTEX SHADER REQUIRED
+  var vertexShader = gl.createShader(gl.VERTEX_SHADER);
+  gl.shaderSource(vertexShader,vertexSource);
+  gl.compileShader(vertexShader);
+  
+  if (!gl.getShaderParameter(vertexShader, gl.COMPILE_STATUS)) {
+          alert(gl.getShaderInfoLog(vertexShader));
+          return null;
+      }
+  
+  //FRAGMENT SHADER REQUIRED
+  var fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
+  gl.shaderSource(fragmentShader,fragmentSource);
+  gl.compileShader(fragmentShader);
+  
+  if (!gl.getShaderParameter(fragmentShader, gl.COMPILE_STATUS)) {
+          alert(gl.getShaderInfoLog(fragmentShader));
+          return null;
+      }
+
+  //COMBINES SHADERS
+  var shaderProgram = gl.createProgram();
+  gl.attachShader(shaderProgram, vertexShader);
+  gl.attachShader(shaderProgram, fragmentShader);
+  gl.linkProgram(shaderProgram);
+
+  if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
+    alert("Could not initialize shaders");
+  }
+
+    shaderProgram.vertexPositionAttribute = gl.getAttribLocation(shaderProgram, "pos");
+    gl.enableVertexAttribArray(shaderProgram.vertexPositionAttribute);
+	
+	shaderProgram.inColor = gl.getAttribLocation(shaderProgram, "inColor");
+    gl.enableVertexAttribArray(shaderProgram.inColor);
+	
+	//TRANSFORM
+	shaderProgram.transf = gl.getUniformLocation(shaderProgram,"transf");
+
+  // let's define the vertex positions
+  var vertexPos = [
+		 
+		-1.0,  1.0,  0.0,//BLACK//Top: First 3D Tri
+		 0.0,  0.0,  0.0,//RED
+		 0.0,  0.5, -1.0,//BLUE
+		 
+		 0.0,  0.0,  0.0,//RED//Top: Second 3D Tri
+		 1.0,  1.0,  0.0,//BLACK
+		 0.0,  0.5, -1.0,//BLUE
+		 
+		 1.0,  1.0,  0.0,//BLACK//Top: Third 3D Tri
+		-1.0,  1.0,  0.0,//BLACK
+		 0.0,  0.5, -1.0,//BLUE
+		 
+		-1.0,  1.0,  0.0,//Top2: First 3D Tri
+		 0.0,  0.0,  0.0,
+		 0.0,  0.5,  1.0,
+		 
+		 0.0,  0.0,  0.0,//Top2: Second 3D Tri
+		 1.0,  1.0,  0.0,
+		 0.0,  0.5,  1.0,
+		 
+		 1.0,  1.0,  0.0,//Top2: Third 3D Tri
+		-1.0,  1.0,  0.0,
+		 0.0,  0.5,  1.0, 
+		 
+		 //BOTTOM
+		-0.5, -0.5,  0.5,//BLUE//Bottom: 1
+		 0.0,  0.0,  0.0,//RED
+		 0.5, -0.5,  0.5,//GREEN
+		 
+		 0.5, -0.5,  0.5,//GREEN//Bottom: 2
+		 0.0,  0.0,  0.0,//RED
+		 0.5, -0.5, -0.5,//BLUE
+		 
+		 0.5, -0.5, -0.5,//BLUE//Bottom: 3
+		 0.0,  0.0,  0.0,//RED
+		-0.5, -0.5, -0.5,//GREEN
+		 
+		-0.5, -0.5, -0.5,//GREEN//Bottom: 4
+		 0.0,  0.0,  0.0,//RED
+		-0.5, -0.5,  0.5,//BLUE
+//////////////////////////////////////////////////////////////////////////////////////////////		 
+		-0.5, -0.5,  0.5,//BLUE//Bottom: 5
+		 0.0, -1.0,  0.0,//
+		 0.5, -0.5,  0.5,//GREEN
+		 
+		 0.5, -0.5,  0.5,//GREEN//Bottom: 6
+		 0.0, -1.0,  0.0,
+		 0.5, -0.5, -0.5,//BLUE 
+		 
+		 0.5, -0.5, -0.5,//GREEN//Bottom: 7
+		 0.0, -1.0,  0.0,
+		-0.5, -0.5, -0.5,//BLUE 
+		 
+		-0.5, -0.5, -0.5,//BLUE//Bottom: 8
+		 0.0, -1.0,  0.0,
+		-0.5, -0.5,  0.5 //GREEN
+   ]; 
+   
+   var vertexColors = [
+		0.0, 0.0, 0.0,//BLACK
+		1.0, 0.0, 0.0,//RED
+		0.0, 1.0, 1.0,//BLUE
+		
+		1.0, 0.0, 0.0,//RED
+		0.0, 0.0, 0.0,//BLACK
+		0.0, 1.0, 1.0,//BLUE
+		
+		0.0, 0.0, 0.0,//BLACK
+		0.0, 0.0, 0.0,//BLACK
+		0.0, 1.0, 1.0,//BLUE
+		
+		//OTHER SIDE
+		0.0, 0.0, 0.0,//BLACK
+		1.0, 0.0, 0.0,//RED
+		0.0, 1.0, 1.0,//BLUE
+		
+		1.0, 0.0, 0.0,//RED
+		0.0, 0.0, 0.0,//BLACK
+		0.0, 1.0, 1.0,//BLUE
+		
+		0.0, 0.0, 0.0,//BLACK
+		0.0, 0.0, 0.0,//BLACK
+		0.0, 1.0, 1.0,//BLUE
+		//////////////////////////////////////////
+		0.0, 0.0, 1.0,//BLUE
+		1.0, 0.0, 0.0,//RED
+		0.0, 1.0, 1.0,//GREEN
+		
+		0.0, 1.0, 1.0,//GREEN
+		1.0, 0.0, 0.0,//RED
+		0.0, 0.0, 1.0,//BLUE
+		
+		0.0, 0.0, 1.0,//BLUE
+		1.0, 0.0, 0.0,//RED
+		0.0, 1.0, 1.0,//GREEN
+		
+		0.0, 1.0, 1.0,//GREEN
+		1.0, 0.0, 0.0,//RED
+		0.0, 0.0, 1.0,//BLUE
+		
+		0.0, 0.0, 1.0,//BLUE
+		0.0, 0.0, 0.0,
+		0.0, 1.0, 1.0,//GREEN
+
+		0.0, 1.0, 1.0,//GREEN
+		0.0, 0.0, 0.0,
+		0.0, 0.0, 1.0,//BLUE
+		
+		0.0, 0.0, 1.0,//BLUE
+		0.0, 0.0, 0.0,
+		0.0, 1.0, 1.0,//GREEN
+		
+		0.0, 1.0, 1.0,//GREEN
+		0.0, 0.0, 0.0,
+		0.0, 0.0, 1.0,//BLUE
+		
+   ];
+
+    //BUFFER
+	var trianglePosBuffer = gl.createBuffer();
+	gl.bindBuffer(gl.ARRAY_BUFFER, trianglePosBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertexPos), gl.STATIC_DRAW);
+    trianglePosBuffer.itemSize = 3;
+    trianglePosBuffer.numItems = 3*14;
+	
+	//COLOR BUFFER
+	var colorBuffer = gl.createBuffer();
+	gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertexColors), gl.STATIC_DRAW);
+    colorBuffer.itemSize = 3;
+    colorBuffer.numItems = 3*14;
+
+	var theta = 0.0;
+	
+	function gooo(){
+		gl.clearColor(0.0, 0.0, 0.0, 1.0);
+		gl.enable(gl.DEPTH_TEST);
+		gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+		//FINALLY DRAW
+		gl.useProgram(shaderProgram);	
+
+		var axis = [0,1,0];
+		var matrix = m4.axisRotation(axis, theta);
+					 
+		gl.uniformMatrix4fv(shaderProgram.transf,false,matrix);
+  
+		gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
+		gl.vertexAttribPointer(shaderProgram.inColor, colorBuffer.itemSize, gl.FLOAT, false, 0, 0);
+		gl.bindBuffer(gl.ARRAY_BUFFER, trianglePosBuffer);
+		gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, trianglePosBuffer.itemSize, gl.FLOAT, false, 0, 0);
+  
+		gl.drawArrays(gl.TRIANGLES, 0, 3*14);//Always use gl.TRIANGLES, next number is where to start drawing, last number is how many to draw
+		
+		theta += 0.01;
+		
+		window.requestAnimationFrame(gooo);
+	}
+	gooo();
+}
+
+
+</script>
+
+</body>
+</html>

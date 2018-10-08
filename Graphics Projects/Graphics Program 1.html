@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<body>
+<canvas id="p1 canvas" width="500" height="500" style="border:1px solid cyan;">
+
+<script>
+
+	var canvas = document.getElementById('p1 canvas');
+	var context = canvas.getContext('2d');
+	
+	function randomCircles(){
+	
+		for(var i = 0; i<10000; i++){
+		
+			context.beginPath();
+			context.arc(Math.floor(Math.random()*(500)+1) , Math.floor(Math.random()*(500)+1), Math.floor(Math.random()*(20)+1), 0 ,2*Math.PI);
+			
+			context.fillStyle = "#" + Math.floor(Math.random()*0xFFFFFF).toString(16);
+			context.strokeStyle = "black";
+			
+			context.stroke();
+			context.fill();
+		}
+	}
+	
+	randomCircles();
+	
+</script>
+
+</body>
+</html>

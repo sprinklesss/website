@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<body>
+<canvas id="p3 canvas" width="500" height="500" style="border:1px solid #000;"></canvas>
+
+<script src="http://graphics.cs.wisc.edu/JS/twgl-full.min.js"></script>
+
+<script>
+
+  var canvas = document.getElementById('p3 canvas');
+  var context = canvas.getContext('2d');
+  var m4 = twgl.m4;
+  
+  var count = 0;
+  var movement = 0.01*Math.PI;
+  
+  var shapeArray = [];
+
+  var ex = 250;
+  var wy = 300;
+  
+  var shapetemp = [
+		[[-60+250,300-60,-60],[-60+250,300+60,-60],[60+250,300-60,-60]],//BASE
+		[[-60+250,300+60,-60],[60+250,300+60,-60],[60+250,300-60,-60]],
+		
+		//[[-60+250,300-60,-60][250,300,100][-60+250,300+60,-60]],
+		//[[-60+250,300-60,-60][250,300,100][60+250,300-60,-60]],
+		//[[60+250,300-60,-60][250,300,100][60+250,300+60,-60]],
+		//[[60+250,300+60,-60][250,300,100][-60+250,300+60,-60]]
+  ];
+  
+  function selectionSort(arr){
+  
+	var min = arr.length;
+	var temp = arr.length; 
+	
+	for(var ii = 0; ii < arr.length; ii++){
+	
+		min = ii;
+		
+		for(var jj = ii+1; jj<arr.length; jj++){
+			if(arr[jj][0][2]<arr[min][0][2]){
+				min = jj;
+			}
+		}
+		
+		temp = arr[ii];
+		arr[ii] = arr[min];
+		arr[min] = temp;
+	}
+		return arr;
+   }
+  
+  function moveForMe() {
+
+	context.fillStyle = "black";
+	context.fillRect(0, 0, canvas.width, canvas.height);
+
+	//Sets up actual variables that will move the object:
+	var axis = [0,1,0];
+	
+    var rot = m4.axisRotation(axis,count);	
+	var tran = m4.translation([250,300,0]);
+    var both = m4.multiply(rot,tran);
+	
+	//Setting up the camera:
+	
+	var eye = [-250,-300*Math.tan(movement),700];
+	var target = [-250,-300,0];
+	var up = [0,1,0];
+	var view = m4.inverse(m4.lookAt(eye,target,up));
+	
+	//Sets up the array with all triangles
+
+	shapetemp = selectionSort(shapetemp);
+
+    context.beginPath();
+	
+	shapetemp.forEach(//NUMBER OF TRIANGLES
+		function spin(t, i){
+	
+			var tri1x = shapetemp[i][0][0];
+			var tri1y = shapetemp[i][0][1];
+			var tri1z = shapetemp[i][0][2];
+			
+			var vec1 = [tri1x,tri1y,tri1z];
+			
+			var mult = m4.multiply(both, view);
+			//var v = m4.transformPoint(mult,t);
+			
+			//NOTE: Using only triangles, all will have exactly three vertices
+			//var done1 = m4.transformPoint(mult, shapetemp[i][0]);
+			
+			context.moveTo(shapetemp[i][0][0],shapetemp[i][0][1],shapetemp[i][0][2]);
+			context.lineTo(shapetemp[i][1][0],shapetemp[i][1][1],shapetemp[i][1][2]);
+			context.lineTo(shapetemp[i][2][0],shapetemp[i][2][1],shapetemp[i][2][2]);
+			context.closePath();
+		}
+	)
+	
+
+
+	//This is the function that will be used to sort the objects in the order they should be drawn
+
+	//selectionSort(shapeArray);//Calls selectionSort to sort the array right away
+	
+	//Strokes and Fills that will draw the actual shape as desired:
+	
+	context.fillStyle = "blue";
+	context.fill();
+	context.strokeStyle = "orange";
+    context.stroke();
+    count += 0.01;
+	movement += 0.01;
+	
+    window.requestAnimationFrame(moveForMe);
+  }
+  window.requestAnimationFrame(moveForMe);  
+
+</script>
+
+</body>
+</html>

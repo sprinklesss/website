@@ -1,0 +1,49 @@
+precision highp float;
+uniform float time;
+uniform vec2 resolution;
+
+varying vec3 fPosition; //Camera-space location
+varying vec3 fNormal; //Camera-space normal
+
+//NOTE: ?...:... Works like an if...else...
+
+const float ambientCoeff = 0.6;//How much ambience?
+
+const vec3 objColor = vec3(0,1,0);//Pick the color!
+const vec3 lightColor = vec3(1,0,0);
+const vec3 lightVec = vec3(0,-1,0.0);//Where the light's coming from.
+
+varying float posY;//Keeps track of y coord for transforms
+varying float posX;//Keeps track of x coord for transforms
+
+void main()
+{
+  
+  vec3 dir = normalize(lightVec);
+  vec3 fNorm = normalize(fNormal);
+  vec3 eye = normalize(-fPosition);
+  vec3 both = normalize(eye+dir);
+  
+  float ambient = ambientCoeff + dot(fNormal, dir);
+
+  vec3 newColor = vec3(0,1,1);
+  vec3 newColor2 = vec3(1,0,0);
+  
+  /*if(mod(1.0,abs(posX)) < 0.05){//Produces interesting design
+    newColor = vec3(0.0,1.0,0.0);
+    if(mod(posX, posX) > 0.0)
+      newColor = vec3(0.0,1.0,1.0);
+    if(mod(posX, posX) < 0.0)
+      newColor = vec3(0.0,1.0,1.0);
+  }*/
+    
+ if(sin(posX*100.0) < 0.0)
+    newColor = vec3(1.0,0.0,1.0);
+  else
+    newColor = vec3(0.0,1.0,1.0);
+    
+  if(sin((posX+posY)*100.0) < 0.0)
+    discard;
+  
+  gl_FragColor = vec4((ambient * newColor), 1.0);
+}

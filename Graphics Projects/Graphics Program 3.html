@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<body>
+<canvas id="p3 canvas" width="500" height="500" style="border:1px solid #000;"></canvas>
+
+<script src="http://graphics.cs.wisc.edu/JS/twgl-full.min.js"></script>
+
+<script>
+
+  var canvas = document.getElementById('p3 canvas');
+  var context = canvas.getContext('2d');
+  var m4 = twgl.m4;
+  
+  var count = 0;
+
+  var shape = [
+  
+	[-60,0,-60],//Base
+	[-60,0,60],
+	[60,0,60],
+	[60,0,-60],
+	[-60,0,-60],
+	
+	[-40,-40,-40],//Up to second level
+	[-40,-40,40],
+	[-60,0,60],
+	[60,0,60],
+	[40,-40,40],
+	[40,-40,-40],
+	[60,0,-60],
+	
+	[40,-40,-40],//Going back up
+	
+	[-40,-40,-40],//Finish the middle level
+	[-40,-40,40],
+	[40,-40,40],
+	
+	[0,-200,0],//Peak
+	[-40,-40,40],
+	[-40,-40,-40],
+	[0,-200,0],
+	[40,-40,-40]
+	
+  ];
+  
+  function moveForMe() {
+
+	context.fillStyle = "black";
+	context.fillRect(0, 0, canvas.width, canvas.height);
+
+    var rot = m4.rotationY(count);	
+	var rot2 = m4.rotationX(count);
+	
+	var tran = m4.translation([200+count*5,250+count*5,0]);
+	var tran2 = m4.translation([250,250,0]);
+	
+	var axis = [1,1,1];
+
+    var both = m4.multiply(rot,tran);
+	var both2 = m4.multiply(rot2, tran2);
+    
+    context.beginPath();
+
+    shape.forEach(
+      function spin(t,i) {
+	  
+        var v = m4.transformPoint(both,t);
+		var v2 = m4.transformPoint(both2,t);
+		
+		if(count < 20){
+			context.lineTo(v[0],v[1]);
+		}
+		else if(count >= 20 && count < 40){
+			context.lineTo(v2[0],v2[1]);
+		}
+		else
+			count = 0;
+      }
+    );
+
+	context.strokeStyle = "orange";
+    context.stroke();
+    count += 0.1;
+	
+    window.requestAnimationFrame(moveForMe);
+  }
+  window.requestAnimationFrame(moveForMe);  
+
+</script>
+
+</body>
+</html>

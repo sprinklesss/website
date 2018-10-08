@@ -1,0 +1,22 @@
+precision highp float;
+uniform float time;
+uniform vec2 resolution;
+
+varying vec3 fPosition; //Camera-space location
+varying vec3 fNormal; //Camera-space normal
+
+//NOTE: ?...:... Works like an if...else...
+
+const float ambientCoeff = 0.50;//How much ambience?
+
+const vec3 objColor = vec3(0,1,0);//Pick the color!
+const vec3 lightVec = vec3(1,1,0);//Where the light's coming from.
+
+void main()
+{  
+  vec3 dir = normalize(lightVec);
+  
+  float ambient = ambientCoeff + dot(fNormal, dir);
+  
+  gl_FragColor = vec4((ambient * objColor), 1.0);
+}

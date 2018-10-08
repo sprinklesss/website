@@ -1,0 +1,240 @@
+/*
+NOTES:
+	.class - assign a class using '.' first
+	#id - assign to an id using '#' first
+*/
+@import url('http://fonts.googleapis.com/css?family=Open+Sans');
+
+/*
+
+	COLOR GRADIENT (from brightest to darkest):
+		AMAZON ORANGE: #FF9900
+		
+		whitesmoke
+		#00B2BF
+		#078DA2
+		rgb(106, 126, 133
+		black
+	
+*/
+
+html {
+	position: relative;
+	min-height: 100%;
+}
+
+body {
+	color: black;
+	font-family: 'Open Sans', sans-serif;
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	/* background-image: url("Images/NEWCOLOR1.png"); */
+	background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+	background-size: 100% 100%;
+	background-color: whitesmoke;
+}
+
+p {
+	line-height: 1.5;
+}
+
+header {
+	letter-spacing: 2px;
+	color: whitesmoke;
+	font-size: 140%;
+}
+
+h1 {
+	padding-top: 0;
+	display: inline;
+}
+
+.top {
+	background: linear-gradient(black, rgb(106, 126, 133));
+	/*background: rgb(106, 126, 133;*/
+	height: 100%;
+}
+
+ul {
+	background-color: rgb(106, 126, 133);
+	overflow: hidden;
+	border-bottom: 2px solid black;
+
+	list-style-type: none;
+    margin: 0;
+    padding: 0;
+    position: sticky;
+    top: 0;
+}
+
+/* ul a {
+	float: left;
+	color: black;
+	background: whitesmoke;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+	font-size: 17px;
+	width: 100px;
+	margin: 0.625%;
+	border: 2px solid black;
+}
+
+ul a:hover, .dropdown:hover .dropButton {
+	background-color: black;
+	color: whitesmoke;
+	text-decoration: bold;
+}
+
+ul a:active {
+	background-color: whitesmoke;
+	color: black;
+}
+
+.dropdown {
+	float: left;
+	overflow: hidden;
+} */
+
+li {
+    float: left;
+}
+
+.realLinks {
+	float: right;
+	/* margin: 5px; */
+}
+
+li a {	
+	float: left;
+	color: black;
+	background: whitesmoke;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+	font-size: 17px;
+	width: 100px;
+	margin: 5px;
+	border: 2px solid black;
+}
+
+li a:hover {
+	background-color: black;
+	color: whitesmoke;
+	text-decoration: bold;
+	transition: 0.5s;
+}
+
+.dropdown .dropButton {
+	font-size: 17px;
+	border: none;
+	outline: Paragraph;
+	color: black;
+	padding: 14px 16px;
+	background-color: inherit;
+	font: inherit;
+	margin: 0;
+}
+
+.dropButton {
+	text-decoration: underline;
+}
+
+.dropdownContent {
+	display: none;
+	position: absolute;
+	background-color: #4db8ff;
+	min-width: inherit;
+	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	z-index: 1;
+	border: 1px solid black;
+}
+
+.dropdownContent a {
+	float: none;
+	color: black;
+	padding: 14px 16px;
+	text-decoration: none;
+	display: block;
+	text-align: left;	
+}
+
+.dropdownContent a:hover {
+	background-color: black;
+}
+
+.dropdown:hover .dropdownContent {
+	display: block;
+}
+
+.linksLeft {
+	/* overflow: hidden; */
+	width: 30%;
+	float: left;
+	margin: auto;
+}
+
+.linksRight {
+	/* overflow: hidden; */
+	width: 30%;
+	float: left;
+	margin: auto;
+}
+
+.textBox2 {
+	float: left;
+	overflow: hidden;
+	width: 30%;
+	border: 2px solid black;
+	color: black;
+}
+
+.middleTextBox {
+	margin: auto;
+	width: 40%;
+	background: whitesmoke;
+	float: left;
+}
+
+.circle {
+  height: 400px;
+  width: 400px;
+  background-image: url("Images/Pic.jpg");
+  border: 1px solid black;
+  border-radius: 50%;
+  margin: 20px;
+  box-shadow: 0px 0px 20px 1px black
+}
+
+.footer {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	/* height: 60px; */
+	background: rgba(255, 255, 255, 0.4);
+	
+}
+
+.threeCols {
+	margin-bottom: 10px;
+}
+
+.divider {
+	float: left;
+	width: 100%;
+}
+
+hr {
+	display: block;
+	/* border-top: 5px solid black;
+	border-bottom: 5px solid black; */
+	border-color: black;
+	background-color: black;
+	height: 5px;
+	border: 0;
+	box-shadow: 0px 0px 5px 1px black
+}
+

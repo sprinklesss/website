@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Graphics town framework code by Mike Gleicher
+  -- written October, 2015
+  -->
+<head>
+    <meta charset="UTF-8">
+    <title>GraphicsTown JS 2015!</title>
+</head>
+<body>
+<!-- load this stuff first -->
+<script src="Libraries/twgl-full.js"></script>
+<script src="Libraries/panel.js"></script>
+<script src="Libraries/arcball.js"></script>
+<script src="grobject.js"></script>
+<script src="ExampleObjects/ground.js"></script>
+
+<!-- This is where we load the objects for the world -->
+<script src="ExampleObjects/simplest.js"></script>
+<script src="ExampleObjects/texturedplane.js"></script>
+<script src="ExampleObjects/cube.js"></script>
+<script src="ExampleObjects/castle.js"></script>
+<script src="ExampleObjects/bodyguard.js"></script>
+<script src="ExampleObjects/flag.js"></script>
+
+<!-- I am adding the helicopter -->
+<script src="Helicopter/helicopter.js"></script>
+
+<!-- This gets loaded LAST (actually, it probably doesn't have to) -->
+<script src="graphicstown.js"></script>
+</body>
+
+<!-- all of the shaders get stuck here in the HTML because
+  -- that's the only way I know to load them without either
+  -- sticking them in JavaScript strings, or using a web server
+  -->
+
+<script id="cube-vs" type="notjs">
+    precision highp float;
+
+    attribute vec3 vpos;
+    attribute vec3 vnormal;
+    varying vec3 outColor;
+
+    uniform mat4 view;
+    uniform mat4 proj;
+    uniform mat4 model;
+    uniform vec3 lightdir;
+    uniform vec3 cubecolor;
+
+    void main(void) {
+	
+        gl_Position = proj * view * model * vec4(vpos, 1.0);
+        vec4 normal = normalize(model * vec4(vnormal,0.0));
+        float diffuse = .5 + .5*abs(dot(normal, vec4(lightdir,0.0)));
+        outColor = cubecolor * diffuse;
+    }
+</script>
+<script id="cube-fs" type="notjs">
+// simple shader that does vertex coloring
+//  (e.g. the vertex shader figures the lighting
+// note this is used for more than just the cube
+    precision highp float;
+    varying vec3 outColor;
+	uniform vec3 lightdir;
+	const float ambientCoeff = 0.3;
+	
+    void main(void) {
+
+		const vec3 lightVec = vec3(0,1,0);//Where the light's coming from.
+		float ambient = ambientCoeff + dot(lightdir, lightVec);
+	
+        gl_FragColor = vec4(((ambient * outColor) + outColor), 1.0);
+    }
+</script>
+
+<!-- Special Ground Plane Shader - makes a boring
+  -- checkerboard
+  -->
+<script id="ground-vs" type="not-js">
+    precision highp float;
+
+    attribute vec3 vpos;
+    varying vec3 outPos;
+
+    uniform mat4 view;
+    uniform mat4 proj;
+	
+	uniform vec3 lightdir;
+
+    void main(void) {
+        gl_Position = proj * view * vec4(vpos, 1.0);
+        outPos = vpos;
+    }
+</script>
+<script id="ground-fs" type="notjs">
+
+    // note this is used for more than just the cube
+    precision highp float;
+    varying vec3 outPos;
+	uniform float time;
+	uniform vec3 lightdir;
+	const float ambient = 0.3;
+		
+
+    void main(void) {	
+	
+		//const vec3 lightVec = vec3(0,1,0);//Where the light's coming from.
+		//float ambient = ambientCoeff + dot(lightdir, lightVec);
+				
+        float xs = step(0.5,mod(outPos.x,1.0));
+        float zs = step(0.5,mod(outPos.z,1.0));
+		
+        float ss = (xs>.5) ? zs : 1.0-zs;
+		
+        gl_FragColor = (mix(vec4(0.0,1.0,1.0,1), vec4(0.0,0.5,1.0,1), ss));
+
+    }
+</script>
+
+<script id="text-vs" type="notjs">
+    precision highp float;
+
+    attribute vec3 vpos;
+    attribute vec3 vnormal;
+	attribute vec2 vTexCoord;
+	varying vec2 fTexCoord;
+    varying vec3 outColor;
+
+    uniform mat4 view;
+    uniform mat4 proj;
+    uniform mat4 model;
+    uniform vec3 lightdir;
+    uniform vec3 cubecolor;
+
+    void main(void) {
+	
+		fTexCoord = vTexCoord;
+        gl_Position = proj * view * model * vec4(vpos, 1.0);
+        vec4 normal = normalize(model * vec4(vnormal,0.0));
+        float diffuse = .5 + .5*abs(dot(normal, vec4(lightdir,0.0)));
+        outColor = cubecolor * diffuse;
+    }
+</script>
+<script id="text-fs" type="notjs">
+// simple shader that does vertex coloring
+//  (e.g. the vertex shader figures the lighting
+// note this is used for more than just the cube
+    precision highp float;
+    varying vec3 outColor;
+	uniform vec3 lightdir;
+	uniform vec3 cubecolor;
+	const float ambientCoeff = 0.3;
+	
+	varying vec2 fTexCoord;
+	
+	  const float xfreq=40.0;
+      const float yfreq=40.0;
+      const float PI=3.14142;
+
+      vec2 Stripe(vec2 tc){
+	    vec2 result;
+	    if(sin(tc.x*xfreq*2.0*PI)>0.0) result.x=1.0; else result.x=0.0;
+	    if(cos(tc.y*yfreq*2.0*PI)>0.0) result.y=1.0; else result.y=0.0;
+	    return result;
+      }
+	
+    void main(void) {
+
+		const vec3 lightVec = vec3(0,1,0);//Where the light's coming from.
+		float ambient = ambientCoeff + dot(lightdir, lightVec);
+	
+        gl_FragColor = vec4(ambient*(Stripe((outColor).xy)), 1.0, 1.0);
+    }
+</script>
+
+<script id="text2-vs" type="notjs">
+    precision highp float;
+
+    attribute vec3 vpos;
+    attribute vec3 vnormal;
+	attribute vec2 vTexCoord;
+	varying vec2 fTexCoord;
+    varying vec3 outColor;
+
+    uniform mat4 view;
+    uniform mat4 proj;
+    uniform mat4 model;
+    uniform vec3 lightdir;
+    uniform vec3 cubecolor;
+
+    void main(void) {
+	
+		fTexCoord = vTexCoord;
+        gl_Position = proj * view * model * vec4(vpos, 1.0);
+        vec4 normal = normalize(model * vec4(vnormal,0.0));
+        float diffuse = .5 + .5*abs(dot(normal, vec4(lightdir,0.0)));
+        outColor = cubecolor * diffuse;
+    }
+</script>
+<script id="text2-fs" type="notjs">
+// simple shader that does vertex coloring
+//  (e.g. the vertex shader figures the lighting
+// note this is used for more than just the cube
+    precision highp float;
+    varying vec3 outColor;
+	uniform vec3 lightdir;
+	uniform vec3 cubecolor;
+	const float ambientCoeff = 0.3;
+	
+	varying vec2 fTexCoord;
+	
+	
+    void main(void) {
+
+		const vec3 lightVec = vec3(0,1,0);//Where the light's coming from.
+		float ambient = ambientCoeff + dot(lightdir, lightVec);
+	
+        gl_FragColor = vec4(ambient, ambient, 1.0, 1.0);
+    }
+</script>
+
+
+<script id="vs" type="not-js">
+        precision highp float;
+        attribute vec3 pos;
+        attribute vec3 inColor;
+        varying vec3 outColor;
+        uniform mat4 view;
+        uniform mat4 proj;
+        void main(void) {
+          gl_Position = proj * view * vec4(pos, 1.0);
+          outColor = inColor;
+        }
+</script>
+<script id="fs" type="not-js">
+        precision highp float;
+        varying vec3 outColor;
+        void main(void) {
+          gl_FragColor = vec4(outColor, 1.0);
+        }
+</script>
+
+<script id="textimg-vs" type="notjs">
+    precision highp float;
+
+    attribute vec3 vpos;
+    attribute vec3 vnormal;
+	attribute vec2 vTexCoord;
+	varying vec2 fTexCoord;
+    varying vec3 outColor;
+
+    uniform mat4 view;
+    uniform mat4 proj;
+    uniform mat4 model;
+    uniform vec3 lightdir;
+    uniform vec3 cubecolor;
+
+    void main(void) {
+	
+		fTexCoord = vTexCoord;
+        gl_Position = proj * view * model * vec4(vpos, 1.0);
+        vec4 normal = normalize(model * vec4(vnormal,0.0));
+        float diffuse = .5 + .5*abs(dot(normal, vec4(lightdir,0.0)));
+        outColor = cubecolor * diffuse;
+    }
+</script>
+<script id="textimg-fs" type="notjs">
+// simple shader that does vertex coloring
+//  (e.g. the vertex shader figures the lighting
+// note this is used for more than just the cube
+    precision highp float;
+    varying vec3 outColor;
+	uniform vec3 lightdir;
+	uniform vec3 cubecolor;
+	const float ambientCoeff = 0.3;
+	
+	varying vec2 fTexCoord;
+	
+	  const float xfreq=40.0;
+      const float yfreq=40.0;
+      const float PI=3.14142;
+
+      vec2 Stripe(vec2 tc){
+	    vec2 result;
+	    if(sin(tc.x*xfreq*2.0*PI)>0.0) result.x=1.0; else result.x=0.0;
+	    if(cos(tc.y*yfreq*2.0*PI)>0.0) result.y=1.0; else result.y=0.0;
+	    return result;
+      }
+	
+    void main(void) {
+
+		const vec3 lightVec = vec3(0,1,0);//Where the light's coming from.
+		float ambient = ambientCoeff + dot(lightdir, lightVec);
+	
+        gl_FragColor = vec4(ambient*(Stripe((outColor).xy)), 1.0, 1.0);
+    }
+</script>
+
+<script id="text3-vs" type="notjs">
+    precision highp float;
+
+    attribute vec3 vpos;
+    attribute vec3 vnormal;
+	attribute vec2 vTexCoord;//texcoord
+	varying vec2 fTexCoord;//texcoord
+    varying vec3 outColor;
+
+    uniform mat4 view;
+    uniform mat4 proj;
+    uniform mat4 model;
+    uniform vec3 lightdir;
+    uniform vec3 cubecolor;
+
+    void main(void) {
+	
+		fTexCoord = vTexCoord;
+		
+        gl_Position = proj * view * model * vec4(vpos, 1.0);
+        vec4 normal = normalize(model * vec4(vnormal,0.0));
+        float diffuse = .5 + .5*abs(dot(normal, vec4(lightdir,0.0)));
+        outColor = cubecolor * diffuse;
+    }
+</script>
+<script id="text3-fs" type="notjs">
+// simple shader that does vertex coloring
+//  (e.g. the vertex shader figures the lighting
+// note this is used for more than just the cube
+    precision highp float;
+    varying vec3 outColor;
+	uniform vec3 lightdir;
+	uniform vec3 cubecolor;
+	const float ambientCoeff = 0.3;
+	
+	varying vec2 fTexCoord;
+	
+    void main(void) {
+
+		const vec3 lightVec = vec3(0,1,0);//Where the light's coming from.
+		float ambient = ambientCoeff + dot(lightdir, lightVec);
+	
+		uniform sampler2D u_texture;
+	
+        gl_FragColor = texture2D(u_texture, fTexCoord);
+    }
+</script>
+
+
+</html>
