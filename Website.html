@@ -7,41 +7,37 @@
 	<meta charset="UTF-8">
 	<link rel="shortcut icon" type="image/ico" href="images/favicon.ico"/>
 	<meta name="Author" content="Eric Russell">
-	<meta name="Description" content="Toss some Graphics around in here">
+	<meta name="Description" content="None">
 	<meta name="Keywords" content="None">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
 
-	<!--VERY TOP PORTION-->
-	<div class="top">
-		<header class="header" align="center">
-		
-			<!-- <h1 float="left">Eric Russell</h1> -->
-			<!-- <h3 style="line-height: 0%">Software Developer | Web Developer | Avid Backpacker</h3> -->
-			
-		</header>
-	</div>
-
 	<!--Navigation Bar below header-->
-	<ul>
+	<ul class="navUl">
 	
-		<li><h1 style="color: white; 
+		<li class="navLi"><h1 style="color: rgb(0, 247, 255); 
 					   line-height: 1; 
 					   padding: 0; 
 					   margin: 5px; 
 					   font-size: 50px;
-					   text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black">Eric Russell</h1></li>
+					   text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black">ER</h1></li>
 	<div class="realLinks">
-		<li><a class="active" href="Website.html" >Home</a></li>
-		<li><a href="Computer Science Resume.pdf" target="_blank">Resume</a></li>
-		<li><a href="https://www.linkedin.com/in/eric-russell-1398b2125/" 
-		   style="color: white; 
+		<li class="navLi"><a class="active" href="Website.html" >Home</a></li>
+		<li class="navLi"><a href="Computer Science Resume.pdf" target="_blank">Resume</a></li>
+		<li class="navLi"><a href="https://www.linkedin.com/in/eric-russell-1398b2125/" 
+		    style="color: white; 
 				  background-color: #0077B5;
 				  border: solid 2px white;
+				  border-radius: 10px;"
+			target="_blank">Linkedin</a></li>
+		<li class="navLi"><a href="https://www.linkedin.com/in/eric-russell-1398b2125/" 
+		    style="color: white; 
+				  background-color: rgb(0, 255, 21);
+				  border: solid 2px white;
 				  border-radius: 10px"
-		   target="_blank">Linkedin</a></li>
+		    target="_blank">HackerRank</a></li>
 	</div>	
 	
 		<!--<div class="dropdown">
@@ -57,28 +53,14 @@
 
 	</ul>
 
-<div class="threeCols">
-
-	<div class="linksLeft">
-
-		<center>
-		<img style="width: 90%; 
-					margin-top: 10%;
-					margin-bottom: 10%" src="images/Amazon.png" alt="Amazon-logo"/>
-			<br><h1>I interned here!</h1>
-		<img style="width: 50%" src="Images/hoofer-logo.png" alt="Hoofers-logo"/>
-			<br><h1>I do projects!</h1>
-		</center>
-
-	</div>
+<div class="landing">
 
 	<div class="middleTextBox">
 
-		<center><h1 style="font-size: 50px">Hello! I'm Eric!</h1>
-				<p style="font-size: 15pt">I'm a student at the University of Wisconsin-Madison studying Computer Science
-				   with passions for working with Big Data and learning new technologies.
-				</p>
-		</center>
+		<h1 style="font-size: 50px">Hello! I'm Eric!</h1>
+		<p style="font-size: 15pt">I'm a student at the University of Wisconsin-Madison studying Computer Science
+		   with a passion for working with Big Data and learning new technologies.
+		</p>
 		<center><div class="circle"></div></center>
 
 		<!-- <p>I'm currently a Senior at the University of Wisconsin - Madison studying Computer Science.
@@ -90,25 +72,48 @@
 
 	</div>
 
-	<div class="linksRight">
+	<div class="rightTextBox">
 
-		<center>
-			<img style="width: 90%; 
-						vertical-align: top;
-						margin-top: 10%" src="Images/uw-madison-logo.png" alt="UW-Madison-logo"/>
-				<br><h1>I go to school here!</h1>
-			<img style="width: 50%;
-						margin-top: 10%" src="Images/backpacker.png" alt="Backpacking-logo"/>
-				<br><h1>I do things!</h1>
-		</center>
+			<h1 style="font-size: 50px">About Myself: </h1>
+			<p style="font-size: 15pt">I'm a student at the University of Wisconsin-Madison studying Computer Science
+			   with a passion for working with Big Data and learning new technologies.
+			</p>
 
-	</div>
+			<ul class="firstList">
+				<li>Programmer</li>
+				<li>Web Developer</li>
+				<li>Student</li>
+				<li>Avid Backpacker</li>
+			</ul>
+	
+			<!-- <p>I'm currently a Senior at the University of Wisconsin - Madison studying Computer Science.
+			   My life is consumed almost entirely by just two things. The first, striving to learn as much
+			   as possible within the infinite realm of technology while tackling a variety of different projects.
+			   And second, exploring as many different National Parks and cities around the world whether it be
+			   in hiking boots, Chaco's, or paddling in a whitewater kayak.
+			</p> -->
+	
+		</div>
 
 </div>
 
 <div class="divider">
 	<hr>
 </div>
+
+<center>
+	<img style="width: 90%; 
+				margin-top: 10%;
+				margin-bottom: 10%" src="images/Amazon.png" alt="Amazon-logo"/>
+	<img style="width: 50%" src="Images/hoofer-logo.png" alt="Hoofers-logo"/>
+</center>
+<center>
+	<img style="width: 90%; 
+				vertical-align: top;
+				margin-top: 10%" src="Images/uw-madison-logo.png" alt="UW-Madison-logo"/>
+	<img style="width: 50%;
+				margin-top: 10%" src="Images/backpacker.png" alt="Backpacking-logo"/>
+</center>
 	
 	<!-- <canvas id="p2 canvas" width="500" height="500" style="border:3px solid orange;"> -->
 
@@ -118,9 +123,9 @@
 
 <!--Footer below all content, pageContentWrapper does not include this but provides a margin so no content hides behind it-->
 <!--<footer class="footer" align="center">-->
-<!-- <div class="footer">
+<div class="footer">
 	<p>Created by: Eric Russell</p>
-</div> -->
+</div>
 <!--</footer>-->
 
 </body>
