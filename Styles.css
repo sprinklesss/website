@@ -73,20 +73,8 @@ h1 {
     top: 0;
 }
 
-nav.stroke ul li a:after {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
-  width: 0%;
-  content: '.';
-  color: transparent;
-  background: #aaa;
-  height: 1px;
-}
-nav.stroke ul li a:hover:after {
-  width: 100%;
+.real ul li a {
+  position: relative;
 }
 
 /* ul a {
@@ -118,13 +106,12 @@ ul a:active {
 	overflow: hidden;
 } */
 
-.navLi {
-    float: left;
-}
-
 .realLinks {
 	float: right;
-	/* margin: 5px; */
+}
+
+.navLi {
+	float: left;
 }
 
 .navLi a {
@@ -137,18 +124,49 @@ ul a:active {
 	font-size: 17px;
 	width: 100px;
 	margin: 5px;
+	/* transition: width 1s; */
+	/* border-bottom-width: 0%; */
+	/* transition: border-bottom 1s; */
+	
 	/* border: 2px solid black; */
 }
 
-.navLi a:hover {
-	/* background-color: black;
-	color: whitesmoke; */
-	line-height: 110%;
-	transform: perspective(1px) translateZ(0);
-	border-bottom: 3px solid black;
-	transition-property: left, right;
-	transition-property: transform;
-	transition-duration: 0.5s;
+.navLi a::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 1px;
+    background: #000;
+    transition: width .5s;
+}
+
+.navLi a:hover::after {
+	width: 100%;
+}
+
+.linkedinButton {
+	float: left; 
+}
+
+.linkedinButton a {
+	float: left;
+	background-color: #0077B5;
+	color: whitesmoke;
+	border: 1px solid #0077B5;
+	border-radius: 10px;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+	font-size: 17px;
+	width: 100px;
+	margin: 5px;
+}
+
+.linkedinButton a:hover {
+	transition: 0.5s;
+	background: whitesmoke;
+	color: #0077B5;
+	border: 1px solid #0077B5;
 }
 
 .dropdown .dropButton {
@@ -240,14 +258,88 @@ ul a:active {
   box-shadow: 0px 0px 20px 0px black
 }
 
+/*
+
+SECONDARY NAV CSS
+
+*/
+
+.secondaryNav {
+	margin-top: 60px;
+}
+.circle1wrapper {
+	float: left;
+	width: 25%;
+}
+.circle2wrapper {
+	float: left;
+	width: 25%;
+}
+.circle3wrapper {
+	float: left;
+	width: 25%;
+}
+.circle4wrapper {
+	float: left;
+	width: 25%;
+}
+
+.smallCircle1 {
+	height: 200px;
+	width: 200px;
+	background-image: url(Images/Amazon.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: contain;
+	border: 1px solid rgb(0, 0, 0);
+	border-radius: 50%;
+	margin-bottom: 60px;
+	box-shadow: 0px 0px 20px 0px black
+  }
+  .smallCircle2 {
+	height: 200px;
+	width: 200px;
+	background-image: url(Images/backpacker.png);
+	background-repeat: no-repeat;
+	border: 1px solid rgb(0, 0, 0);
+	border-radius: 50%;
+	margin-bottom: 60px;
+	box-shadow: 0px 0px 20px 0px black
+  }
+  .smallCircle3 {
+	height: 200px;
+	width: 200px;
+	background-image: url(Images/hoofer-logo.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: contain;
+	border: 1px solid rgb(0, 0, 0);
+	border-radius: 50%;
+	margin-bottom: 60px;
+	box-shadow: 0px 0px 20px 0px black
+  }
+  .smallCircle4 {
+	height: 200px;
+	width: 200px;
+	background-image: url(Images/uw-madison-logo.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: contain;
+	border: 1px solid rgb(0, 0, 0);
+	border-radius: 50%;
+	margin-bottom: 60px;
+	box-shadow: 0px 0px 20px 0px black
+  }
+
+.amazonWrapper {
+	width: 100%;
+}
+
 .footer {
 	text-align: center;
 	bottom: 0;
 	width: 100%;
 	vertical-align: center;
-	/* height: 60px; */
-	/* background: rgb(255, 255, 255); */
-	
 }
 
 .landing {
@@ -255,19 +347,10 @@ ul a:active {
 	margin-right: 2%;
 }
 
-.divider {
-	float: left;
-	width: 100%;
-}
-
 hr {
-	display: block;
-	/* border-top: 5px solid black;
-	border-bottom: 5px solid black; */
-	border-color: black;
-	background-color: black;
-	height: 5px;
 	border: 0;
-	box-shadow: 0px 0px 5px 1px black
+	background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+	height: 5px;
+	width: 95%;
 }
 
