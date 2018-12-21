@@ -31,7 +31,7 @@ body {
 }
 
 p {
-	font-size: 15pt;
+	font-size: 18pt;
 	line-height: 1.5;
 }
 
@@ -45,6 +45,7 @@ h1 {
 	font-size: 50px;
 	padding-top: 0;
 	display: inline;
+	margin-left: 20px;
 }
 
 .top {
@@ -56,13 +57,11 @@ h1 {
 .navUl {
 	background-color: whitesmoke;
 	overflow: hidden;
-	/* border-bottom: 1px solid rgb(92, 92, 92); */
-
 	list-style-type: none;
     margin: 0;
     padding: 0;
     /* position: sticky; */
-    top: 0;
+	top: 0;
 }
 
 .real ul li a {
@@ -345,12 +344,48 @@ SECONDARY NAV CSS
 	width: 100%;
 }
 
+.gallery {
+	width: 100%;
+}
+
+/* GALLERY 25% PIC */
+.galleryPic25 {
+	width: 23%;
+	margin: 1%;
+	float: left;
+}
+/* GALLERY 50% PIC */
+.galleryPic50 {
+	width: 48%;
+	margin: 1%;
+	float: left;
+}
+/* GALLERY 100% PIC */
+.galleryPic100 {
+	width: 98%;
+	margin: 1%;
+	float: left;
+}
+.galleryPic25 img, .galleryPic50 img, .galleryPic100 img {
+	width: 100%;
+	height: auto;
+}
+
+/* FOOTERS */
 .footer {
 	text-align: center;
 	left: 0;
 	bottom: 0;
 	width: 100%;
 	vertical-align: center;
+}
+.stickyFooter {
+	text-align: center;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	vertical-align: center;
+	position: absolute;
 }
 
 .landing {
