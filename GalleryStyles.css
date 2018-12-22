@@ -1,0 +1,19 @@
+.gallerySidenav {
+    width: 100px;
+    position: fixed;
+    background: #015e00;
+    padding: 8px;
+    margin: 5px;
+    text-align: center;
+    border-radius: 15px;
+}
+
+.gallerySidenav a {
+    color: white;
+    text-decoration: none;
+    /* padding: 5px; */
+}
+
+.gallerySidenav a:hover {
+    color: #449200;
+}
