@@ -1,19 +1,58 @@
 .gallerySidenav {
-    width: 100px;
+    width: 24%;
     position: fixed;
     background: #015e00;
     padding: 8px;
-    margin: 5px;
+    /* margin: 5px 5px 0px 5px; */
     text-align: center;
-    border-radius: 15px;
+    border-radius: 0px 10px 10px 0px;
+    border-top: solid whitesmoke 2px;
+    border-right: solid whitesmoke 2px;
+    border-bottom: solid whitesmoke 2px;
+    list-style: none;
+    overflow-x: hidden;
+}
+
+.gallerySidenav:hover {
+    transition: 0.5s;
 }
 
 .gallerySidenav a {
-    color: white;
+    transition: 0.5s;
+    color: whitesmoke;
     text-decoration: none;
-    /* padding: 5px; */
+    margin: 5px;
 }
 
 .gallerySidenav a:hover {
-    color: #449200;
+    transition: 0.5s;
+    font-size: 23px;
+}
+
+.gallerySidenav a:active {
+    transition: 0.5s;
+    font-size: 40px;
+}
+
+/* GALLERY 25% PIC */
+.galleryPic25 {
+	width: 23%;
+	margin: 1%;
+	float: left;
+}
+/* GALLERY 50% PIC */
+.galleryPic50 {
+	width: 48%;
+	margin: 1%;
+	float: left;
+}
+/* GALLERY 100% PIC */
+.galleryPic100 {
+	width: 98%;
+	margin: 1%;
+	float: left;
+}
+.galleryPic25 img, .galleryPic50 img, .galleryPic100 img {
+	width: 100%;
+	height: auto;
 }

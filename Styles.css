@@ -7,12 +7,24 @@ NOTES:
 @import url('https://fonts.googleapis.com/css?family=Quicksand');
 
 /*
-	CRIMSON AND FOREST GREEN
+	CRIMSON AND FOREST GREEN COLOR PALETTE
+
+	Red: #FF0033
+	Dark: #57423F
+	Light: #BFA6A2
+	Light Green: #449200
+	Forest Green: #015E00
+
 */
 
 html {
 	position: relative;
 	min-height: 100%;
+}
+
+::selection {
+	background: #FF0033;
+	color: whitesmoke;
 }
 
 body {
@@ -46,6 +58,11 @@ h1 {
 	padding-top: 0;
 	display: inline;
 	margin-left: 20px;
+}
+h2 {
+	font-size: 32px;
+	padding-top: 0;
+	display: inline;
 }
 
 .top {
@@ -127,8 +144,12 @@ ul a:active {
     display: block;
     width: 0;
     height: 1px;
-    background: #000;
-    transition: width .5s;
+	background: #000;
+	/* left: 50%; */
+	position: relative;
+	transition: width .5s ease-in-out;
+	/* transition: left .5s ease-out; */
+	
 }
 
 .navLi a:hover::after {
@@ -336,35 +357,9 @@ SECONDARY NAV CSS
 	width: 210px;
   }
 
-.amazonWrapper {
-	width: 100%;
-}
-
-/* .gallery {
-
-} */
-
-/* GALLERY 25% PIC */
-.galleryPic25 {
-	width: 23%;
-	margin: 1%;
-	float: left;
-}
-/* GALLERY 50% PIC */
-.galleryPic50 {
-	width: 48%;
-	margin: 1%;
-	float: left;
-}
-/* GALLERY 100% PIC */
-.galleryPic100 {
-	width: 98%;
-	margin: 1%;
-	float: left;
-}
-.galleryPic25 img, .galleryPic50 img, .galleryPic100 img {
-	width: 100%;
-	height: auto;
+.amazonWrapper, .hobbiesWrapper, .hoofersWrapper, .UWMadisonWrapper {
+	margin-left: 4%;
+	margin-right: 4%;
 }
 
 /* FOOTERS */
