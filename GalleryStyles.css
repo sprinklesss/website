@@ -1,3 +1,9 @@
+h2 {
+	font-size: 24px;
+	padding-top: 0;
+	display: inline;
+}
+
 .gallerySidenav {
     width: 24%;
     position: fixed;
@@ -54,5 +60,6 @@
 }
 .galleryPic25 img, .galleryPic50 img, .galleryPic100 img {
 	width: 100%;
-	height: auto;
+    height: auto;
+    box-shadow: 0px 0px 10px 0px black;
 }
